@@ -162,11 +162,10 @@ class MultiSequencePipeline:
         return x_train, x_test, y_train, y_test
 
     @staticmethod
-    def merge(processed_data):
+    def merge_2D(processed_data):
         # TODO MAKE IT SIMPLE
         x_train_list = []
         x_test_list = []
-
         y_train_list = []
         y_test_list = []
         for key, item in processed_data["train"].items():
@@ -181,6 +180,28 @@ class MultiSequencePipeline:
         y_train = np.concatenate(y_train_list, axis=0)
         x_test = np.concatenate(x_test_list, axis=0)
         y_test = np.concatenate(y_test_list, axis=0)
+
+        return x_train, x_test, y_train, y_test
+
+    @staticmethod
+    def merge_3D(processed_data):
+        x_train_list = []
+        x_test_list = []
+        y_train_list = []
+        y_test_list = []
+
+        for key, item in processed_data["train"].items():
+            x_train_list.append(item["x"])
+            y_train_list.append(item["y"])
+
+        for key, item in processed_data["test"].items():
+            x_test_list.append(item["x"])
+            y_test_list.append(item["y"])
+
+        x_train = np.stack(x_train_list, axis=2)
+        y_train = np.stack(y_train_list, axis=1)
+        x_test = np.stack(x_test_list, axis=2)
+        y_test = np.stack(y_test_list, axis=1)
 
         return x_train, x_test, y_train, y_test
 

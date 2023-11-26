@@ -45,6 +45,17 @@ class UCNNModel:
         # Output layer
         self.model.add(Dense(1))
 
+    def build_model_3d(self, input_shape, num_feature_maps, kernel_size, pool_size, dense_units):
+        self.model.add(Conv2D(filters=num_feature_maps, kernel_size=(1, 1), activation='relu', input_shape=input_shape))
+        self.model.add(Conv2D(filters=num_feature_maps, kernel_size=(kernel_size, input_shape[1]), activation='relu'))
+        self.model.add(MaxPooling2D(pool_size=(pool_size, 1)))
+        self.model.add(Conv2D(filters=num_feature_maps, kernel_size=(kernel_size, 1), activation='relu'))
+        self.model.add(MaxPooling2D(pool_size=(pool_size, 1)))
+        self.model.add(Flatten())
+        self.model.add(Dropout(0.2))
+        self.model.add(Dense(units=dense_units, activation='relu'))
+        self.model.add(Dense(units=input_shape[1], activation='sigmoid'))
+
     def compile_model(self):
         self.model.compile(optimizer='adam', loss='mean_squared_error')
         return self.model

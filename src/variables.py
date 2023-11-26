@@ -1,8 +1,18 @@
-INPUT_SHAPE = (60, 82)
-NUM_OF_FEATURE_MAP = 8
-KERNEL_SIZE = 3
-POOL_SIZE = 2
-DENSE_UNITS = 104
+class Variables2D:
+    INPUT_SHAPE = (60, 82)
+    NUM_OF_FEATURE_MAP = 8
+    KERNEL_SIZE = 3
+    POOL_SIZE = 2
+    DENSE_UNITS = 104
+
+
+class Variables3D:
+    INPUT_SHAPE = (60, 5, 82)
+    NUM_OF_FEATURE_MAP = 8
+    KERNEL_SIZE = 3
+    POOL_SIZE = 2
+    DENSE_UNITS = 104
+
 
 ALL_COLS = ['AAPL',
             'AMZN',
