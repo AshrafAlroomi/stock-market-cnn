@@ -47,8 +47,8 @@ def predict():
 
 
 def preprocess_data(data):
-    from src.variables import INPUT_SHAPE
-    multi_sequence_pipeline = MultiSequencePipeline(data, INPUT_SHAPE[0])
+    from src.variables import Variables2D
+    multi_sequence_pipeline = MultiSequencePipeline(data, Variables2D.INPUT_SHAPE[0])
     processed_data = multi_sequence_pipeline.process_for_prediction(data)
     return processed_data
 
