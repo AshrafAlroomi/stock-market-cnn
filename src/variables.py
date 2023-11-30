@@ -7,7 +7,7 @@ class Variables2D:
 
 
 class Variables3D:
-    INPUT_SHAPE = (60, 5, 82)
+    INPUT_SHAPE = (60, 5, 82, 1)
     NUM_OF_FEATURE_MAP = 8
     KERNEL_SIZE = 3
     POOL_SIZE = 2

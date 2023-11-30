@@ -1,4 +1,4 @@
-from keras.src.layers import Reshape, Dropout
+from keras.src.layers import Reshape, Dropout, Conv3D, MaxPooling3D
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 from keras.models import load_model
@@ -46,19 +46,19 @@ class UCNNModel:
         self.model.add(Dense(1))
 
     def build_model_3d(self, input_shape, num_feature_maps, kernel_size, pool_size, dense_units):
-        self.model.add(Conv2D(filters=num_feature_maps, kernel_size=(1, 1), activation='relu', input_shape=input_shape))
-        self.model.add(Conv2D(filters=num_feature_maps, kernel_size=(kernel_size, input_shape[1]), activation='relu'))
-        self.model.add(MaxPooling2D(pool_size=(pool_size, 1)))
-        self.model.add(Conv2D(filters=num_feature_maps, kernel_size=(kernel_size, 1), activation='relu'))
-        self.model.add(MaxPooling2D(pool_size=(pool_size, 1)))
+        self.model.add(Conv3D(filters=num_feature_maps, kernel_size=(kernel_size, kernel_size, kernel_size), activation='relu', padding='same', input_shape=input_shape))
+        self.model.add(Conv3D(filters=num_feature_maps, kernel_size=(kernel_size, kernel_size, kernel_size), activation='relu', padding='same'))
+        self.model.add(MaxPooling3D(pool_size=(pool_size, 1, pool_size), padding='same'))
+        self.model.add(Conv3D(filters=num_feature_maps, kernel_size=(kernel_size, kernel_size, kernel_size), activation='relu', padding='same'))
+        self.model.add(MaxPooling3D(pool_size=(pool_size, 1, pool_size), padding='same'))
         self.model.add(Flatten())
         self.model.add(Dropout(0.2))
         self.model.add(Dense(units=dense_units, activation='relu'))
-        self.model.add(Dense(units=input_shape[1], activation='sigmoid'))
+        self.model.add(Dense(units=input_shape[1], activation='sigmoid'))  # Adjust the output units as needed
 
     def compile_model(self):
-        self.model.compile(optimizer='adam', loss='mean_squared_error')
-        return self.model
+            self.model.compile(optimizer='adam', loss='mean_squared_error')
+            return self.model
 
     def save_model(self, file_path):
         # Save the model to the specified file path
